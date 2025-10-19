@@ -7,6 +7,8 @@ public class FoodItem extends StoreItem {
     // constructor
     FoodItem(String name, String brand, double price, int quantity, String expirationDate, boolean organic) {
         super(name, brand, price, quantity);
+        this.expirationDate = expirationDate;
+        this.organic = organic;
 
         // Checks/Err Handling for expiration date and organic?
 
@@ -17,8 +19,11 @@ public class FoodItem extends StoreItem {
     public void setExpirationDate(String expirationDate){}
     public void setOrganic(boolean organic){}
 
-    //@override
-    //public String toString(){
-      //  return System.out.printf("%s: Price: %,.2f %")
-    //}
+    @Override
+    public String toString(){
+        return String.format("Product Name: %s Brand: %s Price %,.2f Quantity %d" +
+                              " Expiration Date: %s, Oraganic: %b",
+                getName(), getBrand(), getPrice(), getQuantity(),
+                getExpirationDate(), getOrganic());
+    }
 }
