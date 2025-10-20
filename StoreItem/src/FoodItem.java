@@ -16,8 +16,12 @@ public class FoodItem extends StoreItem {
     //getters and setters
     public String getExpirationDate() {return expirationDate;}
     public boolean getOrganic() {return organic;}
-    public void setExpirationDate(String expirationDate){}
-    public void setOrganic(boolean organic){}
+    public void setExpirationDate(String expirationDate){
+        this.expirationDate = expirationDate;
+    }
+    public void setOrganic(boolean organic){
+        this.organic = organic;
+    }
 
     @Override
     public String toString(){

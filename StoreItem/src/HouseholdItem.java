@@ -1,9 +1,9 @@
-public class HousehouldItem extends StoreItem {
+public class HouseholdItem extends StoreItem {
     // attributes
     private String material;
 
     //constructor
-    HousehouldItem(String name, String brand, double price, int quantity, String material) {
+    HouseholdItem(String name, String brand, double price, int quantity, String material) {
         super(name, brand, price, quantity);
         this.material = material;
     }

@@ -11,7 +11,7 @@ public abstract class StoreItem {
         if (price < 0) {
             throw new IllegalArgumentException("Price cannot be negative.");
         }
-        if (quantity < 0 || quantity % 1 != 0) {
+        if (quantity < 0) {
             throw new IllegalArgumentException("Quantity must be positive integer");
         }
         this.name = name;
