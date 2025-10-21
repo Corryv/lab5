@@ -31,6 +31,6 @@ public class ClothingItem extends StoreItem{
     @Override
     public String toString() {
         return String.format("Product Name: %s Brand: %s Price: $%.2f Quantity: %d Size: %s Color: %s Material %s",
-        getName(), getBrand(), getPrice(), getQuantity(), this.size, this.color, this.material);
+        getName(), getBrand(), getPrice(), getQuantity(), getSize(), getColor(), getMaterial());
     }
 }

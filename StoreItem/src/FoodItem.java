@@ -7,11 +7,11 @@ public class FoodItem extends StoreItem {
     // constructor
     FoodItem(String name, String brand, double price, int quantity, String expirationDate, boolean organic) {
         super(name, brand, price, quantity);
+        if (expirationDate.length() != 10 || expirationDate.charAt(2) != '/' || expirationDate.charAt(5) != '/') {
+            throw new IllegalArgumentException("Expiration date should be in XX/XX/XXXX format.");
+        }
         this.expirationDate = expirationDate;
         this.organic = organic;
-
-        // Checks/Err Handling for expiration date and organic?
-
     }
     //getters and setters
     public String getExpirationDate() {return expirationDate;}
