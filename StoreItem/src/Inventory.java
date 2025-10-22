@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 // ALL THE METHODS IN THIS FILE USE POLYMORPHISM
 
@@ -7,7 +8,9 @@ import java.util.List;
 public class Inventory implements InventoryInterface{
 
     // Initialized as ArrayList
-    private List<StoreItem> storeInventory = new ArrayList<>();
+    private static ArrayList<StoreItem> storeInventory = new ArrayList<>();
+    private static ArrayList<StoreItem> cartInventory = new ArrayList<>();
+    private static Scanner scanner = new Scanner(System.in);
 
     // method templates to use for interface
 
