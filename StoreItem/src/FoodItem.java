@@ -26,7 +26,7 @@ public class FoodItem extends StoreItem {
     @Override
     public String toString(){
         return String.format("Product Name: %s Brand: %s Price %,.2f Quantity %d" +
-                              " Expiration Date: %s, Oraganic: %b",
+                              " Expiration Date: %s Oraganic: %b",
                 getName(), getBrand(), getPrice(), getQuantity(),
                 getExpirationDate(), getOrganic());
     }
