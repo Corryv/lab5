@@ -52,8 +52,16 @@ public class practiceDriver {
                     System.out.print("Enter choice by #: ");
                     int categoryChoice = scanner.nextInt();
                     scanner.nextLine();
-                    // Return to Main Menu
-                    if (categoryChoice == 0) {break;}
+                    // Exit
+                    if (categoryChoice == 0) {
+                        System.out.println("Exiting checkout...");
+                        return; // leaves the sellItems() method
+                    }
+
+                    if (categoryChoice != 1 && categoryChoice != 2 && categoryChoice != 3 && categoryChoice != 4) {
+                        System.out.println("Invalid category choice.");
+                        continue; // go back to main menu
+                    }
                     // Show items in that category
                     System.out.printf("Items in Category\n");
                     inventory.displayCategoryInventory(categoryChoice);
