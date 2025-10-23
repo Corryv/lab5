@@ -11,9 +11,8 @@ public class practiceDriver {
         System.out.println("       Select from the options below");
         System.out.println("      ================================");
         System.out.println("1: Sell an item.");
-        System.out.println("2: Add New item to inventory.");
-        System.out.println("3: Add to an existing item in inventory.");
-        System.out.println("4: Checkout cart.");
+        System.out.println("2: Add an Item");
+        System.out.println("3: Checkout cart.");
         System.out.print("Enter choice: ");
         //get user choice
         int choice = getUserChoice();
@@ -26,14 +25,25 @@ public class practiceDriver {
                 System.out.println("Sell feature coming soon!");
                 break;
             }
-            case 2: {inventory.addNew();break;}
-            case 3: {inventory.add();break;}
-            default: System.out.println("Invalid choice. Please restart the program.");
-            break;
+            case 2: {
+                inventory.displayInventory();
+                System.out.println("Add to an exisitng item?(Y/N)");
+                String choice4add = scanner.nextLine();
+                if (choice4add.equalsIgnoreCase("y")) {
+                    inventory.add();
+                } else if(choice4add.equalsIgnoreCase("n")) {
+                    inventory.addNew();
+                } else {
+                    System.out.println("Invalid, exiting program");
+                }
+                break;
+            }
+            case 3: break;
+            default:
+                System.out.println("Invalid choice. Please restart the program.");
+                break;
         }
-        inventory.displayInventory();
     }// end of main
-
     private static int getUserChoice() {
         while (true) {
             try {
