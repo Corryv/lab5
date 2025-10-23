@@ -1,7 +1,28 @@
-import java.lang.runtime.SwitchBootstraps;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * Inventory is used to construct initial inventory and manage the inventory by adding and selling items.
+ * Implements InventoryInterface methods. User inputs that are either int or double go through the appropriate
+ *            validation helper method
+ * Polymorphism: Each method contracted with the Interface will use polymorphism in many ways. Details for each will be
+ *               in the method's javadocs. The cartInventory and storeInventory both use polymorphism by initializing
+ *               an ArrayList of abstract StoreItem objects which can hold any child of the StoreItemClass.
+ * Class Variables: storeInventory - inventory initialized as ArrayList
+ *                  cartInventory - cart inventory for the sell method initialized as an ArrayList
+ *                  FOOD_TAX - constant tax for all food items
+ *                  NONFOOD_TAX = constant tax for all non-food items
+ * Methods:
+ *          Inventory() - constructor used to initialize base inventory
+ *          displayInventory() - prints table display of inventory
+ *          displayCategoryInventory(int category) - returns printed table of specific category
+ *          addItem(int category) - adds items to inventory
+ *          addNewItem(int) - add item that is not currently in to inventory
+ *          sellItems() - Prompts the user for a category to display, offers to sell items
+ *          checkout(double) - calculates the user checkout from subtotal and taxes.
+ *          getValidatedInt(String) - returns validated int from a user input according to the prompt parameter
+ *          getValidatedDouble(String) - returns validated double from a user input according to the prompt parameter
+ */
 public class Inventory implements InventoryInterface {
 
     private static ArrayList<StoreItem> storeInventory = new ArrayList<>();
@@ -10,7 +31,10 @@ public class Inventory implements InventoryInterface {
 
     private static final double FOOD_TAX = 0.02;
     private static final double NONFOOD_TAX = 0.07;
-
+    /**
+     * Constructs inventory to be initialized with a base inventory. (contains more than one of each item type)
+     * Polymorphism: The inventory is initialized with children of the abstract StoreItem
+     */
     public Inventory() {
         storeInventory.add(new Fruit("Pich", "Tiko's", 1.25, 30, "11/05/2025", true, "Red"));
         storeInventory.add(new ShelfStable("Beens", "Miko's", 1.02, 44, "11/15/2030", false, "2 years"));
@@ -27,22 +51,24 @@ public class Inventory implements InventoryInterface {
         storeInventory.add(new CleaningSupply("Detergent", "StinkyDu's", 5.50, 2, "Plastic", true));
     }
 
-    // === Display inventory in simple table format ===
+    /**
+     * displayInventory displays each item in a table format
+     * Polymorphism: The items are categorized by checking if each item is an instance of either
+     *               Electronic, Household, Food, or Clothing.
+     */
     public void displayInventory() {
         System.out.println("\n=== Full Inventory ===");
         System.out.println("---------------------------------------------------------------");
         System.out.printf("%-15s %-15s %-10s %-8s %-8s%n",
                 "Product", "Brand", "Price", "Quantity", "Category");
         System.out.println("---------------------------------------------------------------");
-
+        // Polymorphism demonstrated below
         for (StoreItem item : storeInventory) {
-            String category;
-
-            if (item instanceof FoodItem) category = "Food";
-            else if (item instanceof ElectronicItem) category = "Electronics";
-            else if (item instanceof ClothingItem) category = "Clothing";
-            else if (item instanceof HouseholdItem) category = "Household";
-            else category = "Other";
+            String category; // holds category for each item to display.
+            if (item instanceof FoodItem) {category = "Food";}
+            else if (item instanceof ElectronicItem) {category = "Electronics";}
+            else if (item instanceof ClothingItem) {category = "Clothing";}
+            else{category = "Household";} // there is no option in program to enter any other categories
 
             System.out.printf("%-15s %-15s $%-9.2f %-8d %-10s%n",
                     item.getName(), item.getBrand(), item.getPrice(),
@@ -52,40 +78,51 @@ public class Inventory implements InventoryInterface {
         System.out.println("---------------------------------------------------------------");
     }
 
-
+    /**
+     * displayCategoryInventory displays the inventory of a specific category selected
+     * Polymorphism: This method uses "instanceof" to identify the items that belong to each category
+     * @param categoryChoice number to represent categories in switch cases.
+     */
     public void displayCategoryInventory(int categoryChoice) {
         switch (categoryChoice) {
-            case 1: {
+            case 1: {// FoodItems
                 System.out.println("--- Food Items ---");
                 for (StoreItem item : storeInventory)
                     if (item instanceof FoodItem) System.out.println(item);
                 break;
             }
-            case 2: {
+            case 2: {// Electronics
                 System.out.println("--- Electronics ---");
                 for (StoreItem item : storeInventory)
                     if (item instanceof ElectronicItem) System.out.println(item);
                 break;
             }
-            case 3: {
+            case 3: {// Clothing
                 System.out.println("--- Clothing ---");
                 for (StoreItem item : storeInventory)
                     if (item instanceof ClothingItem) System.out.println(item);
                 break;
             }
-            case 4: {
+            case 4: {// Household
                 System.out.println("--- Household ---");
                 for (StoreItem item : storeInventory) {
                     if (item instanceof HouseholdItem) System.out.println(item);
                 }
                 break;
             }
-            default:
-                System.out.println("Invalid category choice.");
+            // Invalid Selection for Category number
+            default: System.out.println("Invalid category choice.");
         }
     }
 
-
+    /**
+     * addItem prompts if to add existing item or not. If add is selected the user will be prompted for name of item
+     * followed by the quantity. If addNew is selected the user is prompted to construct their own item that is a type
+     * of the category selected.
+     * Polymorphism: The addItem method uses a for loop to iterate inventory StoreItems to validate selected item name
+     * and the quantity.
+     * @param category number to represent the category to add to
+     */
     public void addItem(int category) {
         boolean done = false;
         while (!done) {
@@ -95,12 +132,10 @@ public class Inventory implements InventoryInterface {
             if (addExisting.equalsIgnoreCase("y")) {
                 System.out.print("Enter item name to increase: ");
                 String name = scanner.nextLine();
-                System.out.print("Enter quantity to add: ");
-                int qty = scanner.nextInt();
-                scanner.nextLine(); // clear buffer
-                boolean found = false;
+                int qty = getValidatedInt("Enter quantity to add: ");
 
-                // print updated quantity
+                boolean found = false;
+                // Polymorphism: print updated quantity
                 for (StoreItem item : storeInventory) {
                     if (item.getName().equalsIgnoreCase(name)) {
                         item.setQuantity(item.getQuantity() + qty);
@@ -111,18 +146,17 @@ public class Inventory implements InventoryInterface {
                 }//Not Found
                 if (!found) {
                     System.out.println("Item not found in this category.");
-                    System.out.print("Would you like to try again to add more items? (Y/N): ");
+                    System.out.print("Would you like to try again? (Y/N): ");
                 }
-
-                if (found) {
-                    System.out.println("Would you like to add another item? (Y/N): ");
-                }
+                // if found we already added to item quantity. Option to exit or continue adding
+                if (found) {System.out.println("Would you like to add another item? (Y/N): ");}
 
                 String cont = scanner.nextLine();
-                if (cont.equalsIgnoreCase("n"))
-                    done = true;
+                if (cont.equalsIgnoreCase("n")){done = true;}
+            } // end of if add
 
-            } else if (addExisting.equalsIgnoreCase("n")) {
+                // user want to addNew
+            else if (addExisting.equalsIgnoreCase("n")) {
                 // user prompts addNew()
                 addNew(category);
                 // check if user wants to add more
@@ -130,18 +164,26 @@ public class Inventory implements InventoryInterface {
                 String cont = scanner.nextLine();
                 if (cont.equalsIgnoreCase("n")) {
                     done = true;
-                }
-
-            } else {
-                System.out.println("Invalid input. Please enter Y or N.");
+                } else if (cont.equalsIgnoreCase("y")) {
+                    continue;
+                } else {
+                    System.out.println("Invalid input. Please enter Y or N.");
+                }// return to prompt again
             }
         } // end while
 
+        // Done adding
         System.out.println("\nUpdated inventory:");
         displayInventory();
     }
 
-    // === Add new item based on category ===
+    /**
+     * addNew takes the category the user would like to build, then prompts the user for inputs to construct and add a
+     * selected item type/category to inventory.
+     * the inventory.
+     * Polymorphism: Demonstrated by all items in the list being stored as StoreItems we can add each type to the list.
+     * @param category the category number under which to add the new item
+     */
     public void addNew(int category) {
         switch (category) {
             case 1: { // Food
@@ -149,11 +191,8 @@ public class Inventory implements InventoryInterface {
                 String name = scanner.nextLine();
                 System.out.print("Enter brand: ");
                 String brand = scanner.nextLine();
-                System.out.print("Enter price: ");
-                double price = scanner.nextDouble();
-                System.out.print("Enter quantity: ");
-                int qty = scanner.nextInt();
-                scanner.nextLine(); // clear buffer
+                double price = getValidatedDouble("Enter Price: ");
+                int qty = getValidatedInt("Enter quantity: ");
                 System.out.print("Enter expiration (mm/dd/yyyy): ");
                 String exp = scanner.nextLine();
                 System.out.print("Organic? (true/false): ");
@@ -167,13 +206,9 @@ public class Inventory implements InventoryInterface {
                 String name = scanner.nextLine();
                 System.out.print("Enter brand: ");
                 String brand = scanner.nextLine();
-                System.out.print("Enter price: ");
-                double price = scanner.nextDouble();
-                System.out.print("Enter quantity: ");
-                int qty = scanner.nextInt();
-                System.out.print("Enter warranty months: ");
-                int months = scanner.nextInt();
-                scanner.nextLine(); // clear buffer
+                double price = getValidatedDouble("Enter Price: ");
+                int qty = getValidatedInt("Enter quantity: ");
+                int months = getValidatedInt("Enter warranty length in months: ");
                 storeInventory.add(new ElectronicItem(name, brand, price, qty, months));
                 System.out.println(" Added new electronic item: " + name);
                 break;
@@ -183,11 +218,8 @@ public class Inventory implements InventoryInterface {
                 String name = scanner.nextLine();
                 System.out.print("Enter brand: ");
                 String brand = scanner.nextLine();
-                System.out.print("Enter price: ");
-                double price = scanner.nextDouble();
-                System.out.print("Enter quantity: ");
-                int qty = scanner.nextInt();
-                scanner.nextLine(); // clear buffer
+                double price = getValidatedDouble("Enter Price: ");
+                int qty = getValidatedInt("Enter quantity: ");
                 System.out.print("Enter size: ");
                 String size = scanner.nextLine();
                 System.out.print("Enter color: ");
@@ -203,11 +235,8 @@ public class Inventory implements InventoryInterface {
                 String name = scanner.nextLine();
                 System.out.print("Enter brand: ");
                 String brand = scanner.nextLine();
-                System.out.print("Enter price: ");
-                double price = scanner.nextDouble();
-                System.out.print("Enter quantity: ");
-                int qty = scanner.nextInt();
-                scanner.nextLine(); // clear buffer
+                double price = getValidatedDouble("Enter Price: ");
+                int qty = getValidatedInt("Enter quantity: ");
                 System.out.print("Enter material: ");
                 String material = scanner.nextLine();
                 storeInventory.add(new HouseholdItem(name, brand, price, qty, material));
@@ -219,10 +248,15 @@ public class Inventory implements InventoryInterface {
         }
     }
 
-    // SellItems
+    /**
+     * sellItems prompts the user for the category first, then displays the inventory for the category. The user is
+     * next prompted to enter a name and quantity. The user is next printed the bought items, followed by asking user
+     * to check out. Once checkout the program prints receipt and updated inventory is complete the user exits
+     * sellItems.
+     */
     public void sellItems() {
-        // initialize boolean to loop if user wants to buy more
         boolean done = false;
+        // subtotal for cart starts at 0
         double subtotal = 0.0;
         cartInventory.clear();
         // Will break out when user exits or is done shopping
@@ -233,30 +267,22 @@ public class Inventory implements InventoryInterface {
             System.out.println("3. Clothing");
             System.out.println("4. Household");
             System.out.println("0. Return to Main Menu");
-            System.out.print("Enter choice: ");
-            int category = scanner.nextInt();
-            scanner.nextLine(); // clear buffer
+            int category = getValidatedInt("Enter Category: ");
             // Exit
             if (category == 0) {
                 return;
             }
-
+            // invalid back to menu (helper functions cover string inputs)
             if (category != 1 && category != 2 && category != 3 && category != 4) {
-                System.out.println("Invalid category choice. Back to Main Menu");
-                continue; // go back to main menu
+                System.out.println("Invalid category choice. Select Category again");
+                continue; // go back to select category
             }
-
-            // Displays inventory for specific Type(Food, Elec, Clothing, Household)
             displayCategoryInventory(category);
             // get item and quantity to buy
             System.out.print("Enter item name to buy: ");
             String name = scanner.nextLine();
-            System.out.print("Enter quantity: ");
-            int qty = scanner.nextInt();
-            scanner.nextLine(); // clear buffer
-
+            int qty = getValidatedInt("Enter quantity: ");
             StoreItem foundItem = null;
-
             // check item and quantity values. Then Calc subtotal
             for (StoreItem item : storeInventory) {
                 if (item.getName().equalsIgnoreCase(name) && item.getQuantity() >= qty) {
@@ -264,7 +290,7 @@ public class Inventory implements InventoryInterface {
                     break;
                 }
             }
-            // not found or invalid quantity jump back to select cat
+            // not found or invalid quantity
             if (foundItem == null) {
                 System.out.println("Invalid input. Try again.");
                 continue; // restart loop
@@ -322,5 +348,48 @@ public class Inventory implements InventoryInterface {
         System.out.println("\nReturn Policy:");
         System.out.println("Food: No returns.");
         System.out.println("Electronics/Clothing/Household: 30 days with receipt.");
+    }
+    /**
+     * getValidatedInt prints the prompt to the user and ensures the user enters a valid int.
+     * @param prompt String prompt that the user is responding to
+     * @return int value that has been validated from negatives and strings
+     */
+    static int getValidatedInt(String prompt) {
+        while (true) {
+            System.out.print(prompt);
+            String input = scanner.nextLine();
+            try {
+                int value = Integer.parseInt(input);
+                if (value < 0) {
+                    System.out.println("Value must be positive. Try again.");
+                    continue;
+                }
+                return value;
+            } catch (NumberFormatException e) {
+                System.out.println("Error: Please enter a whole number");
+            }
+        }
+    }
+
+    /**
+     * getValidatedDouble prints the prompt to the user and ensures the user enters a valid double.
+     * @param prompt String prompt that the user is responding to
+     * @return int value that has been validated from negatives and strings
+     */
+    public static double getValidatedDouble(String prompt) {
+        while (true) {
+            System.out.print(prompt);
+            String input = scanner.nextLine();
+            try {
+                double value = Double.parseDouble(input);
+                if (value < 0) {
+                    System.out.println("Value cannot be negative. Try again.");
+                    continue;
+                }
+                return value; // valid double
+            } catch (NumberFormatException e) {
+                System.out.println("Error: Please enter a valid number.");
+            }
+        }
     }
 }

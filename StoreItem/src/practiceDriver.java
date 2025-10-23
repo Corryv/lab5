@@ -32,9 +32,7 @@ public class practiceDriver {
             System.out.println("3. Display inventory");
             System.out.println("4. Exit");
             System.out.print("Enter choice: ");
-            int choice = scanner.nextInt();
-            scanner.nextLine(); // buffer
-
+            int choice = Inventory.getValidatedInt("Enter Choice #: ");
             // 4 Cases: Sell , Add, Display Inventory, and Exiting.
             switch (choice) {
                 case 1:
@@ -49,9 +47,8 @@ public class practiceDriver {
                     System.out.println("3. Clothing");
                     System.out.println("4. Household");
                     System.out.println("0. Return to menu");
-                    System.out.print("Enter choice by #: ");
-                    int categoryChoice = scanner.nextInt();
-                    scanner.nextLine();
+                    int categoryChoice = Inventory.getValidatedInt("Enter Category #: ");
+
                     // Exit
                     if (categoryChoice == 0) {
                         System.out.println("Exiting checkout...");
