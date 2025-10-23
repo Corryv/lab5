@@ -111,11 +111,17 @@ public class Inventory implements InventoryInterface {
                 }//Not Found
                 if (!found) {
                     System.out.println("Item not found in this category.");
+                    System.out.print("Would you like to try again to add more items? (Y/N): ");
                 }
-                System.out.print("Would you like to try again to add more items? (Y/N): ");
+
+                if (found) {
+                    System.out.println("Would you like to add another item? (Y/N): ");
+                }
+
                 String cont = scanner.nextLine();
                 if (cont.equalsIgnoreCase("n"))
                     done = true;
+
             } else if (addExisting.equalsIgnoreCase("n")) {
                 // user prompts addNew()
                 addNew(category);

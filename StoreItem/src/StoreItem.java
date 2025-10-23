@@ -11,9 +11,16 @@ public abstract class StoreItem {
         if (price < 0) {
             throw new IllegalArgumentException("Price cannot be negative.");
         }
-        if (quantity < 0) {
-            throw new IllegalArgumentException("Quantity must be positive integer");
+        try {
+            quantity = Integer.parseInt(String.valueOf(quantity));
+            if (quantity < 0) {
+                throw new IllegalArgumentException("Quantity must be a positive integer.");
+            }
+        } catch (NumberFormatException e) {
+            System.out.println("Error: Quantity must be a numeric value.");
+            return; // or loop again for re-entry
         }
+
         this.name = name;
         this.brand = brand;
         this.price = price;
