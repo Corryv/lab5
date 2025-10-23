@@ -19,6 +19,6 @@ public class Shoe extends ClothingItem{
     @Override
     public String toString() {
         return String.format("Product Name: %s Brand: %s Price: $%.2f Quantity: %d Size: %s Color: %s Material %s Style: %s",
-                getName(), getBrand(), getPrice(), getQuantity(), getSize(), getColor(), getMaterial());
+                getName(), getBrand(), getPrice(), getQuantity(), getSize(), getColor(), getMaterial(),getStyle());
     }
 }
