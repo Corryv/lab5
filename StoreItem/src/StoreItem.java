@@ -1,3 +1,9 @@
+/**
+ *
+ * StoreItem is the foundation of the item classes and their hierarchy. It is the base class for all items in the shop.
+ * The program initializes the most common attributes and behaviors shared by all store items.
+ * All different types of items are stored under StoreItem. Subclasses can be referenced as this super class.
+ */
 public abstract class StoreItem {
     // Attributes
     private String name;
@@ -5,7 +11,16 @@ public abstract class StoreItem {
     private double price;
     private int quantity;
 
-    // Constructor
+    /**
+     * Constructs a StoreItem with specified attributes.
+    Validates that price and quantity are non-negative.
+    //     *
+    //     * @param name The name of the item
+    //     * @param brand The brand of the item
+    //     * @param price The price of the item (must be non-negative)
+    //     * @param quantity The quantity in stock (must be non-negative)
+    //     * @throws IllegalArgumentException if price is negative or quantity is invalid
+     */
     StoreItem(String name, String brand, double price, int quantity) {
         // Error Handling for price and quantity
         if (price < 0) {
