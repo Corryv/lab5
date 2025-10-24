@@ -1,10 +1,25 @@
-public class ClothingItem extends StoreItem{
+/**
+ * ClothingItem represents clothing products in the store inventory.
+ * This abstract class extends StoreItem and adds clothing-specific attributes
+ * such as size, color, and material composition.
+ */
+ public class ClothingItem extends StoreItem{
     // attributes
     private String size;
     private String color;
     private String material;
 
-    // Constructor
+    /**
+     * Constructs a ClothingItem with specified attributes.
+     *
+     * @param name The name of the clothing item
+     * @param brand The brand of the clothing item
+     * @param price The price of the clothing item (must be non-negative)
+     * @param quantity The quantity in stock (must be non-negative)
+     * @param size The size of the item (e.g., S, M, L, XL)
+     * @param color The color of the item
+     * @param material The material composition (e.g., Cotton, Polyester)
+     */
     ClothingItem(String name, String brand, double price, int quantity, String size, String color, String material) {
         super(name, brand, price, quantity);
         this.size = size;

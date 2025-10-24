@@ -19,7 +19,7 @@ import java.util.Scanner;
  * getValidatedInt() is used handles int inputs (signature in Inventory class)
  */
 
-public class practiceDriver {
+public class WQSGilchristShaneVantienenCorry {
 
     private static final Scanner scanner = new Scanner(System.in);
 

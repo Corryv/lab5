@@ -13,13 +13,13 @@ public abstract class StoreItem {
 
     /**
      * Constructs a StoreItem with specified attributes.
-    Validates that price and quantity are non-negative.
-    //     *
-    //     * @param name The name of the item
-    //     * @param brand The brand of the item
-    //     * @param price The price of the item (must be non-negative)
-    //     * @param quantity The quantity in stock (must be non-negative)
-    //     * @throws IllegalArgumentException if price is negative or quantity is invalid
+    * Validates that price and quantity are non-negative.
+    *
+    * @param name The name of the item
+    * @param brand The brand of the item
+    * @param price The price of the item (must be non-negative)
+    * @param quantity The quantity in stock (must be non-negative)
+    * @throws IllegalArgumentException if price is negative or quantity is invalid
      */
     StoreItem(String name, String brand, double price, int quantity) {
         // Error Handling for price and quantity
