@@ -10,12 +10,12 @@
 import java.util.Scanner;
 
 /**
- *
- * Purpose: The driver file runs the Wilmington Quick Shop program. The main menu is controlled by switch cases.Each case
- * directs the user based on the case (1-4). "sell an Item" directs the user to the sell method, "Add an Item"prompts
- * the user for category before going into the addItem method, and "exit" closes the program
- *
- * Polymorpho
+ * @author Corry Vantienen, Shane Gilchrist
+ * CSC 331 001-002-003
+ * Lab #5 Box Store
+ * Purpose: The driver file runs the Wilmington Quick Shop program. The main menu is controlled by switch cases. Cases
+ *          directs the user based on the case (1-4). "sell an Item" directs the user to the sell method,"Add an
+ *          Item" prompts the user for category before going into the addItem method, and "exit" closes the program
  * getValidatedInt() is used handles int inputs (signature in Inventory class)
  */
 
