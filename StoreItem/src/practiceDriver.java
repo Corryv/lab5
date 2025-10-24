@@ -9,15 +9,26 @@
  */
 import java.util.Scanner;
 
+/**
+ *
+ * Purpose: The driver file runs the Wilmington Quick Shop program. The main menu is controlled by switch cases.Each case
+ * directs the user based on the case (1-4). "sell an Item" directs the user to the sell method, "Add an Item"prompts
+ * the user for category before going into the addItem method, and "exit" closes the program
+ *
+ * Polymorpho
+ * getValidatedInt() is used handles int inputs (signature in Inventory class)
+ */
+
 public class practiceDriver {
 
     private static final Scanner scanner = new Scanner(System.in);
 
     /**
-     * Main:  controls flow of the menu-based interface.
-     * Main-Menu: Offers the user 4 options
-     *             buy, sell, display inventory, and exit
-     *
+     * Main controls the flow of the user interface with switch cases.
+     * Methods :
+     *          sellItems() - Prompts the user for a category to display, offers to sell items
+     *          addItem(int category) - adds items to inventory
+     *          getValidatedInt(String) - returns validated int from a user input according to the prompt parameter
      */
     public static void main(String[] args) {
 
@@ -52,7 +63,7 @@ public class practiceDriver {
                     // Exit
                     if (categoryChoice == 0) {
                         System.out.println("Exiting checkout...");
-                        return; // leaves the sellItems() method
+                        return; // leaves to menu
                     }
 
                     if (categoryChoice != 1 && categoryChoice != 2 && categoryChoice != 3 && categoryChoice != 4) {

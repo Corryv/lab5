@@ -3,10 +3,10 @@ import java.util.Scanner;
 
 /**
  * Inventory is used to construct initial inventory and manage the inventory by adding and selling items.
- * Implements InventoryInterface methods. User inputs that are either int or double go through the appropriate
- *            validation helper method
- * Polymorphism: Each method contracted with the Interface will use polymorphism in many ways. Details for each will be
- *               in the method's javadocs. The cartInventory and storeInventory both use polymorphism by initializing
+ * User inputs that are either int or double go through the appropriate validation helper method
+ * Polymorphism: Each method in the Inventory polymorphism in different ways, but mainly through interacting
+ *               with the Inventory. More detail will be in the javadocs for the methods.
+ *               The cartInventory and storeInventory both use polymorphism by initializing
  *               an ArrayList of abstract StoreItem objects which can hold any child of the StoreItemClass.
  * Class Variables: storeInventory - inventory initialized as ArrayList
  *                  cartInventory - cart inventory for the sell method initialized as an ArrayList
